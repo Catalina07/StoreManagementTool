@@ -10,6 +10,7 @@ import storeManagementTool.Mappers.ProductMapper;
 import storeManagementTool.Repositories.CartRepository;
 import storeManagementTool.Repositories.ProductRepository;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -60,6 +61,23 @@ public class ProductService {
         product.setAvailable(productReqDTO.isAvailable());
         product.setPrice(productReqDTO.getPrice());
         product.setQuantity(productReqDTO.getQuantity());
+
+        productRepository.save(product);
+
+        return productMapper.entityToDTO(product);
+    }
+
+    public ProductEntityToDTO updateProduct(long id, ProductEntityToDTO request){
+        Optional<Product> optionalProduct = productRepository.findById(id);
+
+        // TODO: add case when we cannot find the product with the specific id; working now on the happy flow
+        Product product = optionalProduct.get();
+
+        product.setName(request.getName());
+        product.setQuantity(request.getQuantity());
+        product.setDescription(request.getDescription());
+        product.setAvailable(request.isAvailable());
+        product.setPrice(request.getPrice());
 
         productRepository.save(product);
 
