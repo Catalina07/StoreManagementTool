@@ -4,13 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -37,6 +32,9 @@ public class User {
     @NotBlank
     @Size(max = 120)
     private String password;
+
+//    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    private Cart cart;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",

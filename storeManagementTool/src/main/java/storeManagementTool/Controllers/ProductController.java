@@ -1,18 +1,24 @@
 package storeManagementTool.Controllers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import storeManagementTool.Dtos.ProductEntityToDTO;
 import storeManagementTool.Dtos.ProductReqDTO;
+import storeManagementTool.Entities.ERole;
+import storeManagementTool.Entities.User;
 import storeManagementTool.Services.ProductService;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
+@Slf4j
 public class ProductController {
 
 
@@ -24,11 +30,6 @@ public class ProductController {
         return productService.getReq();
     }
 
-    @GetMapping("/test")
-    public String testing(){
-        return "It works!";
-    }
-
     @GetMapping("/{id}")
     public ProductEntityToDTO getProductById(@PathVariable Long id){
         return productService.getProductById(id);
@@ -38,13 +39,13 @@ public class ProductController {
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )
-//    TODO: @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ProductEntityToDTO> createProduct(@RequestBody ProductReqDTO request) {
-        return new ResponseEntity<>(productService.createProduct(request), HttpStatus.CREATED);
+            return new ResponseEntity<>(productService.createProduct(request), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-//    TODO: @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteProduct(@PathVariable Long id) {
         productService.deleteProductById(id);
     }
@@ -57,6 +58,24 @@ public class ProductController {
     @PutMapping("/{id}")
     public ResponseEntity<ProductEntityToDTO> updateProduct(@PathVariable Long id, @RequestBody ProductEntityToDTO request){
         return new ResponseEntity<ProductEntityToDTO>(productService.updateProduct(id, request), HttpStatus.OK);
+    }
+
+    @PatchMapping({"/changePrice/{id}"})
+    public ResponseEntity<ProductEntityToDTO> changePrice(@RequestParam float price, @PathVariable Long id) {
+        if( price < 0) {
+            log.error("Price is negative!");
+            throw new IllegalArgumentException("Price must be greater than 0!");
+        }
+        return ResponseEntity.ok(productService.changePriceById(id, price));
+    }
+
+    @PatchMapping({"/changeQuantity/{id}"})
+    public ResponseEntity<ProductEntityToDTO> changeQuantity(@RequestParam long quantity, @PathVariable Long id) {
+        if( quantity < 0) {
+            log.error("Quantity is negative!");
+            throw new IllegalArgumentException("Price must be at least 0!");
+        }
+        return ResponseEntity.ok(productService.changeQuantityById(id, quantity));
     }
 
 
