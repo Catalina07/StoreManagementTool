@@ -20,4 +20,6 @@ This is a Java Spring Boot application with PosgreSQL database that is designed 
 - GET /api/products - get all the products saved into the database, filtered by their current availability
 - PUT /api/products/{id} - update a product based on its name, quantity, availability or price (being able to make multiple changes)
 - PATCH /api/products/changePrice/{id} - update only the price of a product with a certain id. If price is negative throw specific error
-- PATCH /api/products/changeQuantity/{id} - update only the quantity of a product based on its id. If the updated quantity is negative, throw specific error 
+- PATCH /api/products/changeQuantity/{id} - update only the quantity of a product based on its id. If the updated quantity is negative, throw specific error
+
+**Future implementations to be added** : create a cart that will be attributed to each user and that will contain the products that the user will select
