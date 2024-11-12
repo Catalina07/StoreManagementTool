@@ -1,22 +1,20 @@
 package storeManagementTool.Mappers;
 
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import storeManagementTool.Dtos.CartEntityToDTO;
 import storeManagementTool.Entities.Cart;
 
-@Component
-public class CartMapper {
+@Mapper(componentModel = "spring")
+public interface CartMapper {
 
-    @Autowired
-    private ModelMapper modelMapper;
-
-    public CartEntityToDTO entityToDTO(Cart cart){
-        return modelMapper.map(cart, CartEntityToDTO.class);
-    }
-
-    public Cart convertToEntity(CartEntityToDTO cartEntityToDTO){
-        return modelMapper.map(cartEntityToDTO, Cart.class);
-    }
+//    @Mapping(target = "finalPrice", source = ".", qualifiedByName = "setFinalPrice")
+//    CartEntityToDTO entityToDto(Cart cartEntity);
+//
+//    @Named("setFinalPrice")
+//    default Double setTotalPrice(Cart cartEntity) {
+//        return cartEntity.getProducts().stream().mapToDouble(product -> product.getPrice() * product.getQuantity())
+//                .sum();
+//    }
 }

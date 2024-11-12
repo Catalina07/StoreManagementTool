@@ -8,7 +8,6 @@ import storeManagementTool.Dtos.ProductReqDTO;
 import storeManagementTool.Entities.Product;
 import storeManagementTool.Exceptions.ProductNotFoundException;
 import storeManagementTool.Mappers.ProductMapper;
-import storeManagementTool.Repositories.CartRepository;
 import storeManagementTool.Repositories.ProductRepository;
 
 import java.util.List;
@@ -21,9 +20,6 @@ public class ProductService {
 
     @Autowired
     ProductRepository productRepository;
-
-    @Autowired
-    CartRepository cartRepository;
 
     @Autowired
     ProductMapper productMapper;
