@@ -5,14 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import storeManagementTool.Dtos.ProductEntityToDTO;
 import storeManagementTool.Dtos.ProductReqDTO;
-import storeManagementTool.Entities.ERole;
-import storeManagementTool.Entities.User;
 import storeManagementTool.Services.ProductService;
-import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 
@@ -26,12 +23,12 @@ public class ProductController {
     ProductService productService;
 
     @GetMapping("/PostRequestBody")
-    public ProductReqDTO getRequestBody(){
+    public ProductReqDTO getRequestBody() {
         return productService.getReq();
     }
 
     @GetMapping("/{id}")
-    public ProductEntityToDTO getProductById(@PathVariable Long id){
+    public ProductEntityToDTO getProductById(@PathVariable Long id) {
         return productService.getProductById(id);
     }
 
@@ -41,7 +38,7 @@ public class ProductController {
     )
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ProductEntityToDTO> createProduct(@RequestBody ProductReqDTO request) {
-            return new ResponseEntity<>(productService.createProduct(request), HttpStatus.CREATED);
+        return new ResponseEntity<>(productService.createProduct(request), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
@@ -51,18 +48,18 @@ public class ProductController {
     }
 
     @GetMapping()
-    public List<ProductEntityToDTO> getProducts(){
+    public List<ProductEntityToDTO> getProducts() {
         return productService.getProducts();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductEntityToDTO> updateProduct(@PathVariable Long id, @RequestBody ProductEntityToDTO request){
+    public ResponseEntity<ProductEntityToDTO> updateProduct(@PathVariable Long id, @RequestBody ProductEntityToDTO request) {
         return new ResponseEntity<ProductEntityToDTO>(productService.updateProduct(id, request), HttpStatus.OK);
     }
 
     @PatchMapping({"/changePrice/{id}"})
     public ResponseEntity<ProductEntityToDTO> changePrice(@RequestParam float price, @PathVariable Long id) {
-        if( price < 0) {
+        if (price < 0) {
             log.error("Price is negative!");
             throw new IllegalArgumentException("Price must be greater than 0!");
         }
@@ -71,7 +68,7 @@ public class ProductController {
 
     @PatchMapping({"/changeQuantity/{id}"})
     public ResponseEntity<ProductEntityToDTO> changeQuantity(@RequestParam long quantity, @PathVariable Long id) {
-        if( quantity < 0) {
+        if (quantity < 0) {
             log.error("Quantity is negative!");
             throw new IllegalArgumentException("Price must be at least 0!");
         }

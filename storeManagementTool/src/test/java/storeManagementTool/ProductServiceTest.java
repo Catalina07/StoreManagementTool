@@ -4,9 +4,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -21,6 +18,9 @@ import storeManagementTool.Services.ProductService;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ProductServiceTest {
@@ -70,7 +70,7 @@ public class ProductServiceTest {
                     .description(product.getDescription())
                     .price(product.getPrice())
                     .quantity(product.getQuantity())
-                    .build() ;
+                    .build();
         });
     }
 
@@ -100,7 +100,7 @@ public class ProductServiceTest {
     }
 
     @Test
-    public void updateProduct(){
+    public void updateProduct() {
         ProductReqDTO productReqDTO = new ProductReqDTO();
         ProductEntityToDTO productEntityToDTO = new ProductEntityToDTO();
         productEntityToDTO.setId(1L);
@@ -120,7 +120,7 @@ public class ProductServiceTest {
     }
 
     @Test
-    public void updateProductWhenItDoesNotExist(){
+    public void updateProductWhenItDoesNotExist() {
         ProductReqDTO productReqDTO = new ProductReqDTO();
         ProductEntityToDTO productEntityToDTO = new ProductEntityToDTO();
         productEntityToDTO.setId(10L);
@@ -130,7 +130,7 @@ public class ProductServiceTest {
     }
 
     @Test
-    public void changePrice(){
+    public void changePrice() {
         Long id = 1l;
         float price = 1000f;
         when(productRepository.findById(id)).thenReturn(Optional.of(products.get(0)));
@@ -144,7 +144,7 @@ public class ProductServiceTest {
     }
 
     @Test
-    public void changeQuantity(){
+    public void changeQuantity() {
         Long id = 1l;
         long quantity = 1000l;
         when(productRepository.findById(id)).thenReturn(Optional.of(products.get(0)));

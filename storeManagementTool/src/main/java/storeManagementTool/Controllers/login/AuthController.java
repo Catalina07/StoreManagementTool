@@ -1,8 +1,6 @@
 package storeManagementTool.Controllers.login;
 
 import jakarta.validation.Valid;
-import org.apache.catalina.Group;
-import org.apache.catalina.UserDatabase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,7 +22,6 @@ import storeManagementTool.Security.Services.UserDetailsImpl;
 import storeManagementTool.Security.jwt.JwtUtils;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;

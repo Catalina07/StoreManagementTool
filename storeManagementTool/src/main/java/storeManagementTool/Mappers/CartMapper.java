@@ -1,10 +1,6 @@
 package storeManagementTool.Mappers;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
-import storeManagementTool.Dtos.CartEntityToDTO;
-import storeManagementTool.Entities.Cart;
 
 @Mapper(componentModel = "spring")
 public interface CartMapper {
